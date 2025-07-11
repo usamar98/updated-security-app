@@ -42,7 +42,7 @@ export default function ProblemSolution() {
   }, [])
 
   return (
-    <section className="py-20 relative overflow-hidden" style={{ backgroundColor: '#0f0f0f' }} ref={ref}>
+    <section className="py-20 relative overflow-hidden" style={{ backgroundColor: '#000000' }} ref={ref}>
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Large Container Card */}
         <motion.div 

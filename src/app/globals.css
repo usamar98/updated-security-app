@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #000000;
+  --foreground: #ffffff;
 }
 
 @theme inline {
@@ -14,8 +14,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #000000;
+    --foreground: #ffffff;
   }
 }
 
@@ -25,12 +25,14 @@
 
 html {
   scroll-behavior: smooth;
+  background-color: #000000;
 }
 
 body {
   font-family: 'Inter', sans-serif;
-  background: var(--background);
-  color: var(--foreground);
+  background: #000000;
+  color: #ffffff;
+  min-height: 100vh;
 }
 
 /* Custom animations */
@@ -82,6 +84,15 @@ body {
   box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
 }
 
+/* Ensure all elements inherit the dark theme */
+* {
+  box-sizing: border-box;
+}
+
+/* Override any white backgrounds */
+section, div, main, article, aside, nav, header, footer {
+  background-color: transparent;
+}
 body {
   font-family: Arial, Helvetica, sans-serif;
 }

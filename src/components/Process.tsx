@@ -427,7 +427,7 @@ export default function Process() {
   }
 
   return (
-    <section id="process" className="py-20 relative overflow-hidden" style={{ backgroundColor: '#0f0f0f' }} ref={ref}>
+    <section id="process" className="py-20 relative overflow-hidden" style={{ backgroundColor: '#000000' }} ref={ref}>
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
           className="text-center mb-16"

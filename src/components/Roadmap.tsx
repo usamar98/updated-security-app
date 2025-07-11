@@ -1,23 +1,18 @@
 'use client'
-import { motion } from 'framer-motion'
-import { useInView } from 'framer-motion'
-import { useRef, useState, useEffect } from 'react'
+import { motion, useInView } from 'framer-motion'
+import { useRef } from 'react'
 
 export default function Roadmap() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
-  const [activeCard, setActiveCard] = useState(0)
-  const [scrollPositions, setScrollPositions] = useState([0, 0, 0, 0])
-  const [isPaused, setIsPaused] = useState([false, false, false, false])
 
   const roadmapData = [
     {
       quarter: "Q1 2025",
       title: "Foundation & Launch",
       icon: "🚀",
-      color: "from-blue-400 to-blue-600",
-      borderColor: "border-blue-400/30",
-      glowColor: "shadow-blue-500/10",
+      color: "from-gray-400 to-gray-600",
+      borderColor: "border-gray-400/30",
       items: [
         "Launch of $AION Token with live in-platform utility",
         "Whitepaper v1",
@@ -32,9 +27,8 @@ export default function Roadmap() {
       quarter: "Q2 2025",
       title: "Expansion & Ecosystem Growth",
       icon: "🌱",
-      color: "from-green-400 to-green-600",
-      borderColor: "border-green-400/30",
-      glowColor: "shadow-green-500/10",
+      color: "from-gray-400 to-gray-600",
+      borderColor: "border-gray-400/30",
       items: [
         "Public beta of Aion Trace for fund tracking and forensics",
         "Rollout of wallet alert system via Telegram + Aion Lab",
@@ -47,9 +41,8 @@ export default function Roadmap() {
       quarter: "Q3 2026",
       title: "Multichain & Automation",
       icon: "🔗",
-      color: "from-purple-400 to-purple-600",
-      borderColor: "border-purple-400/30",
-      glowColor: "shadow-purple-500/10",
+      color: "from-gray-400 to-gray-600",
+      borderColor: "border-gray-400/30",
       items: [
         "Browser extension for real-time link/contract scanning across Web3",
         "Multichain expansion (ETH, BSC, Arbitrum, Polygon)",
@@ -62,9 +55,8 @@ export default function Roadmap() {
       quarter: "Q4 2026",
       title: "Infrastructure & Network",
       icon: "🏗️",
-      color: "from-orange-400 to-orange-600",
-      borderColor: "border-orange-400/30",
-      glowColor: "shadow-orange-500/10",
+      color: "from-gray-400 to-gray-600",
+      borderColor: "border-gray-400/30",
       items: [
         "Rollout of project trust scoring and AI-based contract badges",
         "Enhanced tracing & forensic toolkit for public and private investigations",
@@ -75,35 +67,8 @@ export default function Roadmap() {
     }
   ]
 
-  // Auto-scroll for each card
-  useEffect(() => {
-    const intervals = roadmapData.map((_, index) => {
-      if (isPaused[index]) return null
-      
-      return setInterval(() => {
-        setScrollPositions(prev => {
-          const newPositions = [...prev]
-          newPositions[index] = (newPositions[index] + 1) % (roadmapData[index].items.length * 60)
-          return newPositions
-        })
-      }, 80)
-    })
-
-    return () => {
-      intervals.forEach(interval => interval && clearInterval(interval))
-    }
-  }, [isPaused, roadmapData])
-
-  const handleCardHover = (index: number, isHovering: boolean) => {
-    setIsPaused(prev => {
-      const newPaused = [...prev]
-      newPaused[index] = isHovering
-      return newPaused
-    })
-  }
-
   return (
-    <section className="py-20 relative overflow-hidden" style={{ backgroundColor: '#0f0f0f' }} ref={ref}>
+    <section className="py-20 relative overflow-hidden" style={{ backgroundColor: '#000000' }} ref={ref}>
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -112,34 +77,10 @@ export default function Roadmap() {
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.6 }}
         >
-          <motion.h2 
-            className="text-3xl md:text-5xl font-bold text-gray-300 mb-4 flex items-center justify-center gap-3"
-            animate={{
-              textShadow: [
-                "0 0 20px rgba(59, 130, 246, 0.3)",
-                "0 0 30px rgba(59, 130, 246, 0.5)",
-                "0 0 20px rgba(59, 130, 246, 0.3)"
-              ]
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity
-            }}
-          >
-            <motion.span
-              animate={{ 
-                rotate: [0, 10, -10, 0],
-                scale: [1, 1.1, 1]
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity
-              }}
-            >
-              🗺️
-            </motion.span>
+          <h2 className="text-3xl md:text-5xl font-bold text-gray-300 mb-4 flex items-center justify-center gap-3">
+            <span>🗺️</span>
             ROADMAP
-          </motion.h2>
+          </h2>
           <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto mb-2">
             Our Journey to Web3 Security Excellence
           </p>
@@ -148,144 +89,83 @@ export default function Roadmap() {
           </p>
         </motion.div>
 
-        {/* Roadmap Cards Grid - 2x2 Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {roadmapData.map((quarter, index) => (
+        {/* Timeline Container */}
+        <div className="relative max-w-6xl mx-auto">
+          {/* Center Line */}
+          <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gray-700 h-full">
+            {/* Animated Progress Line */}
             <motion.div
-              key={index}
-              className={`bg-transparent border ${quarter.borderColor} rounded-2xl p-6 backdrop-blur-sm relative overflow-hidden h-96 hover:bg-gray-900/10 transition-all duration-300`}
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              onHoverStart={() => handleCardHover(index, true)}
-              onHoverEnd={() => handleCardHover(index, false)}
-              whileHover={{
-                y: -8,
-                boxShadow: `0 20px 40px ${quarter.glowColor}`,
-                borderColor: quarter.borderColor.replace('/30', '/60')
-              }}
-              onClick={() => setActiveCard(index)}
-            >
-              {/* Card Header */}
-              <div className="relative z-10 mb-4">
-                <motion.div
-                  className="text-3xl mb-2"
-                  animate={{
-                    rotate: [0, 10, -10, 0],
-                    scale: [1, 1.1, 1]
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    delay: index * 0.5
-                  }}
-                >
-                  {quarter.icon}
-                </motion.div>
-                <h3 className={`text-xl font-bold bg-gradient-to-r ${quarter.color} bg-clip-text text-transparent mb-1`}>
-                  {quarter.quarter}
-                </h3>
-                <p className="text-gray-300 text-sm font-medium">
-                  {quarter.title}
-                </p>
-              </div>
+              className="w-full bg-gray-800"
+              initial={{ height: "0%" }}
+              animate={isInView ? { height: "100%" } : { height: "0%" }}
+              transition={{ duration: 2, delay: 0.5, ease: "easeInOut" }}
+            />
+          </div>
 
-              {/* Scrolling Content */}
-              <div className="relative h-64 overflow-hidden">
+          {/* Timeline Items */}
+          <div className="space-y-16">
+            {roadmapData.map((quarter, index) => {
+              const isRight = index % 2 === 0
+              
+              return (
                 <motion.div
-                  className="absolute inset-0 space-y-3"
-                  animate={{
-                    y: `-${scrollPositions[index]}px`
-                  }}
-                  transition={{
-                    duration: 0.1,
-                    ease: "linear"
-                  }}
+                  key={index}
+                  className={`flex items-center ${isRight ? 'justify-end' : 'justify-start'}`}
+                  initial={{ opacity: 0, x: isRight ? 50 : -50 }}
+                  animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: isRight ? 50 : -50 }}
+                  transition={{ duration: 0.6, delay: index * 0.2 }}
                 >
-                  {/* Repeat items for seamless loop */}
-                  {Array.from({ length: 3 }).map((_, repeatIndex) => (
-                    <div key={repeatIndex} className="space-y-3">
-                      {quarter.items.map((item, itemIndex) => (
-                        <motion.div
-                          key={`${repeatIndex}-${itemIndex}`}
-                          className="bg-transparent border border-gray-600/20 rounded-lg p-3 backdrop-blur-sm hover:border-gray-500/40 transition-all duration-300"
-                          whileInView={{
-                            borderColor: quarter.borderColor.replace('/30', '/40'),
-                            backgroundColor: "rgba(75, 85, 99, 0.05)"
-                          }}
-                          viewport={{ once: false, margin: "-20px" }}
-                        >
-                          <div className="flex items-start gap-2">
-                            <motion.div
-                              className={`w-2 h-2 rounded-full bg-gradient-to-r ${quarter.color} mt-2 flex-shrink-0`}
-                              animate={{
-                                opacity: [0.5, 1, 0.5],
-                                scale: [1, 1.2, 1]
-                              }}
-                              transition={{
-                                duration: 2,
-                                repeat: Infinity,
-                                delay: itemIndex * 0.2
-                              }}
-                            />
-                            <p className="text-gray-400 text-sm leading-relaxed">
-                              {item}
-                            </p>
+                  {/* Card */}
+                  <div className={`w-full max-w-md ${isRight ? 'mr-8' : 'ml-8'}`}>
+                    <div className={`bg-black/40 border ${quarter.borderColor} rounded-2xl p-6 backdrop-blur-sm relative`}>
+                      {/* Card Header */}
+                      <div className="mb-4">
+                        <div className="text-3xl mb-2">
+                          {quarter.icon}
+                        </div>
+                        <h3 className={`text-xl font-bold bg-gradient-to-r ${quarter.color} bg-clip-text text-transparent mb-1`}>
+                          {quarter.quarter}
+                        </h3>
+                        <p className="text-gray-300 text-sm font-medium">
+                          {quarter.title}
+                        </p>
+                      </div>
+
+                      {/* Static Content */}
+                      <div className="space-y-3">
+                        {quarter.items.map((item, itemIndex) => (
+                          <div
+                            key={itemIndex}
+                            className="bg-black/20 border border-gray-600/20 rounded-lg p-3 backdrop-blur-sm"
+                          >
+                            <div className="flex items-start gap-2">
+                              <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${quarter.color} mt-2 flex-shrink-0`} />
+                              <p className="text-gray-400 text-sm leading-relaxed">
+                                {item}
+                              </p>
+                            </div>
                           </div>
-                        </motion.div>
-                      ))}
+                        ))}
+                      </div>
+
+                      {/* Milestone Count */}
+                      <div className="mt-4 text-xs text-gray-500">
+                        {quarter.items.length} milestones
+                      </div>
                     </div>
-                  ))}
-                </motion.div>
+                  </div>
 
-                {/* Gradient overlays */}
-                <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-gray-900/60 to-transparent pointer-events-none z-10" />
-                <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-gray-900/60 to-transparent pointer-events-none z-10" />
-              </div>
-
-              {/* Progress Indicator */}
-              <div className="absolute bottom-3 left-3 right-3">
-                <div className="flex items-center justify-between text-xs text-gray-500">
-                  <span>{quarter.items.length} milestones</span>
+                  {/* Timeline Dot */}
                   <motion.div
-                    className={`w-2 h-2 rounded-full bg-gradient-to-r ${quarter.color}`}
-                    animate={{
-                      opacity: [0.3, 1, 0.3]
-                    }}
-                    transition={{
-                      duration: 1,
-                      repeat: Infinity
-                    }}
+                    className={`absolute left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-gradient-to-r ${quarter.color} border-4 border-black z-10`}
+                    initial={{ scale: 0 }}
+                    animate={isInView ? { scale: 1 } : { scale: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.2 + 0.3 }}
                   />
-                </div>
-              </div>
-
-              {/* Background Pattern */}
-              <div className="absolute inset-0 opacity-3">
-                <motion.div
-                  className={`w-full h-full bg-gradient-to-br ${quarter.color}`}
-                  animate={{
-                    rotate: [0, 360]
-                  }}
-                  transition={{
-                    duration: 20,
-                    repeat: Infinity,
-                    ease: "linear"
-                  }}
-                />
-              </div>
-
-              {/* Active Card Indicator */}
-              {activeCard === index && (
-                <motion.div
-                  className={`absolute inset-0 border-2 ${quarter.borderColor.replace('/30', '/60')} rounded-2xl pointer-events-none`}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.3 }}
-                />
-              )}
-            </motion.div>
-          ))}
+                </motion.div>
+              )
+            })}
+          </div>
         </div>
 
         {/* Bottom Info */}
