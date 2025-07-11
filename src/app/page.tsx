@@ -1,6 +1,7 @@
 'use client'
 import { useEffect } from 'react'
-import Lenis from '@studio-freight/lenis'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Header from '@/components/Header'
 import Hero from '@/components/Hero'
 import ProblemSolution from '@/components/ProblemSolution'
@@ -12,17 +13,60 @@ import Footer from '@/components/Footer'
 
 export default function Home() {
   useEffect(() => {
-    const lenis = new Lenis()
+    // Register ScrollTrigger plugin
+    gsap.registerPlugin(ScrollTrigger)
 
-    function raf(time: number) {
-      lenis.raf(time)
-      requestAnimationFrame(raf)
+    // Smooth scrolling with GSAP
+    let smoother: any
+    
+    const initSmoothScrolling = () => {
+      // Create smooth scrolling effect
+      const scrollContainer = document.documentElement
+      
+      gsap.set(scrollContainer, {
+        scrollBehavior: 'auto'
+      })
+
+      // Add smooth scroll animation
+      let currentY = 0
+      let targetY = 0
+      let ease = 0.08
+
+      const updateScroll = () => {
+        targetY = window.scrollY
+        currentY += (targetY - currentY) * ease
+        
+        if (Math.abs(targetY - currentY) < 0.1) {
+          currentY = targetY
+        }
+        
+        requestAnimationFrame(updateScroll)
+      }
+
+      updateScroll()
+
+      // Refresh ScrollTrigger on resize
+      const handleResize = () => {
+        ScrollTrigger.refresh()
+      }
+
+      window.addEventListener('resize', handleResize)
+
+      return () => {
+        window.removeEventListener('resize', handleResize)
+        ScrollTrigger.killAll()
+      }
     }
 
-    requestAnimationFrame(raf)
+    // Initialize after a short delay to ensure DOM is ready
+    const timer = setTimeout(() => {
+      smoother = initSmoothScrolling()
+    }, 100)
 
     return () => {
-      lenis.destroy()
+      clearTimeout(timer)
+      if (smoother) smoother()
+      ScrollTrigger.killAll()
     }
   }, [])
 
