@@ -1,11 +1,13 @@
 'use client'
 import { useEffect } from 'react'
 import Lenis from '@studio-freight/lenis'
+import Header from '@/components/Header'
 import Hero from '@/components/Hero'
 import ProblemSolution from '@/components/ProblemSolution'
 import Process from '@/components/Process'
 import Tokenomics from '@/components/Tokenomics'
-import Header from '@/components/Header'
+import Roadmap from '@/components/Roadmap'
+import AboutUs from '@/components/AboutUs'
 import Footer from '@/components/Footer'
 
 export default function Home() {
@@ -41,6 +43,8 @@ export default function Home() {
       <ProblemSolution />
       <Process />
       <Tokenomics />
+      <Roadmap />
+      <AboutUs />
       <Footer />
     </main>
   )
