@@ -20,7 +20,7 @@ export default function Hero() {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: "easeOut"
+        ease: [0.25, 0.1, 0.25, 1] // Changed from "easeOut" to cubic-bezier array
       }
     }
   }
@@ -58,7 +58,7 @@ export default function Hero() {
               transition={{
                 duration: 3,
                 repeat: Infinity,
-                ease: "linear"
+                ease: [0, 0, 1, 1] // Changed from "linear" to cubic-bezier array
               }}
             >
               Aion AI
