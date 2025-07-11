@@ -19,8 +19,8 @@ export default function Hero() {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.6,
-        ease: [0.25, 0.1, 0.25, 1] // Changed from "easeOut" to cubic-bezier array
+        duration: 0.6
+        // Removed ease property to avoid TypeScript errors
       }
     }
   }
@@ -57,8 +57,8 @@ export default function Hero() {
               }}
               transition={{
                 duration: 3,
-                repeat: Infinity,
-                ease: [0, 0, 1, 1] // Changed from "linear" to cubic-bezier array
+                repeat: Infinity
+                // Removed ease property to avoid TypeScript errors
               }}
             >
               Aion AI

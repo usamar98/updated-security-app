@@ -63,8 +63,8 @@ export default function Services() {
       y: 0,
       scale: 1,
       transition: {
-        duration: 0.6,
-        ease: "easeOut"
+        duration: 0.6
+        // Removed ease property to avoid TypeScript errors
       }
     }
   }
@@ -173,7 +173,7 @@ export default function Services() {
 }
 
 // Services cards animation
-const ServiceCard = ({ title, description }) => {
+const ServiceCard = ({ title, description }: { title: string; description: string }) => {
   return (
     <motion.div
       className="bg-white rounded-xl p-8 shadow-lg"
