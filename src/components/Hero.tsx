@@ -372,11 +372,11 @@ export default function Hero() {
           
           {/* CTA Buttons */}
           <motion.div 
-            className="flex flex-col sm:flex-row gap-6 justify-center mb-16"
+            className="flex flex-col sm:flex-row gap-3 sm:gap-6 justify-center mb-16"
             variants={itemVariants}
           >
             <motion.button 
-              className="group relative bg-transparent border border-gray-500 text-gray-400 px-10 py-5 rounded-2xl text-lg font-semibold backdrop-blur-sm overflow-hidden"
+              className="group relative bg-transparent border border-gray-500 text-gray-400 px-4 py-2.5 sm:px-10 sm:py-5 rounded-xl sm:rounded-2xl text-sm sm:text-lg font-medium sm:font-semibold backdrop-blur-sm overflow-hidden"
               whileHover={{ 
                 scale: 1.05,
                 borderColor: "rgb(107, 114, 128)",
@@ -384,13 +384,13 @@ export default function Hero() {
               }}
               whileTap={{ scale: 0.95 }}
             >
-              <span className="flex items-center justify-center gap-2">
+              <span className="flex items-center justify-center gap-1.5 sm:gap-2">
                 💰 Buy Aion AI
               </span>
             </motion.button>
             
             <motion.button 
-              className="group relative bg-transparent border border-gray-500 text-gray-400 px-10 py-5 rounded-2xl text-lg font-semibold backdrop-blur-sm overflow-hidden"
+              className="group relative bg-transparent border border-gray-500 text-gray-400 px-4 py-2.5 sm:px-10 sm:py-5 rounded-xl sm:rounded-2xl text-sm sm:text-lg font-medium sm:font-semibold backdrop-blur-sm overflow-hidden"
               whileHover={{ 
                 scale: 1.05,
                 borderColor: "rgb(107, 114, 128)",
@@ -398,7 +398,7 @@ export default function Hero() {
               }}
               whileTap={{ scale: 0.95 }}
             >
-              <span className="flex items-center justify-center gap-2">
+              <span className="flex items-center justify-center gap-1.5 sm:gap-2">
                 🤖 Try Aion Bot
               </span>
             </motion.button>

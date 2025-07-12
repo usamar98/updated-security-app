@@ -155,9 +155,9 @@ export default function Header() {
           }}
           transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
         >
-          <div className="py-6 space-y-4 border-t border-white/10">
+          <div className="py-6 space-y-4 border-t border-white/10 bg-black/95 backdrop-blur-md">
             {/* Mobile Navigation with Single Border */}
-            <div className="border border-white/20 rounded-lg p-2 space-y-2">
+            <div className="border border-white/20 rounded-lg p-2 space-y-2 bg-black/50">
               {[
                 { name: 'Home', href: '#hero' },
                 { name: 'Features', href: '#features' },
