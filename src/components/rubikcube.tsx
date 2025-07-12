@@ -12,7 +12,7 @@ const RubiksCubeModel = forwardRef((props, ref) => {
   const GAP = 0.01;
   const RADIUS = 0.075;
   
-  const mainGroupRef = useRef();
+  const mainGroupRef = useRef(null);
   const isAnimatingRef = useRef(false);
   const currentRotationRef = useRef(0);
   const lastMoveAxisRef = useRef(null);
