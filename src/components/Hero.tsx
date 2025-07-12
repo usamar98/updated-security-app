@@ -340,20 +340,6 @@ export default function Hero() {
           initial="hidden"
           animate="visible"
         >
-          {/* Badge */}
-          <motion.div 
-            className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-3 rounded-full text-sm font-medium mb-8 shadow-2xl"
-            variants={itemVariants}
-            whileHover={{ 
-              scale: 1.05,
-              backgroundColor: "rgba(255, 255, 255, 0.15)",
-              borderColor: "rgba(255, 255, 255, 0.3)"
-            }}
-          >
-            <div className="w-2 h-2 bg-gray-400 rounded-full" />
-            🛡️ Real-Time Web3 Security
-          </motion.div>
-          
           {/* Main Heading */}
           <motion.h1 
             className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-8 leading-tight"
@@ -399,7 +385,7 @@ export default function Hero() {
               whileTap={{ scale: 0.95 }}
             >
               <span className="flex items-center justify-center gap-2">
-                🚀 Launch Aion Lab
+                💰 Buy Aion AI
               </span>
             </motion.button>
             
@@ -414,20 +400,6 @@ export default function Hero() {
             >
               <span className="flex items-center justify-center gap-2">
                 🤖 Try Aion Bot
-              </span>
-            </motion.button>
-            
-            <motion.button 
-              className="group relative bg-transparent border border-gray-500 text-gray-400 px-10 py-5 rounded-2xl text-lg font-semibold backdrop-blur-sm overflow-hidden"
-              whileHover={{ 
-                scale: 1.05,
-                borderColor: "rgb(107, 114, 128)",
-                color: "rgb(156, 163, 175)"
-              }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <span className="flex items-center justify-center gap-2">
-                📘 View Docs
               </span>
             </motion.button>
           </motion.div>
