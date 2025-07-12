@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import { PerspectiveCamera, useHelper } from "@react-three/drei";
+import { PerspectiveCamera } from "@react-three/drei";
 import { useThree, useFrame } from "@react-three/fiber";
 import { SpotLight, useDepthBuffer } from '@react-three/drei';
 import * as THREE from 'three';
@@ -41,7 +41,6 @@ const RubiksCubeModel = forwardRef((props, ref) => {
   const reusableQuaternion = useMemo(() => new Quaternion(), []);
   
   React.useImperativeHandle(ref, () => ({
-    ...mainGroupRef.current,
     reset: resetCube
   }));
 
@@ -221,7 +220,7 @@ const RubiksCubeModel = forwardRef((props, ref) => {
     const moves = [];
     for (let axis of ['x', 'y', 'z']) {
       for (let layer of [-1, 0, 1]) {
-        for (let direction of [1, -1]) {
+        for (const direction of [1, -1]) {
           moves.push({ axis, layer, direction });
         }
       }
