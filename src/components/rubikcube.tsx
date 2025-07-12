@@ -23,7 +23,12 @@ type MoveType = {
   rotationAngle?: number;
 };
 
-const RubiksCubeModel = forwardRef<THREE.Group, any>((props, ref) => {
+// Define the ref type for the exposed methods
+type RubiksCubeRef = {
+  reset: () => void;
+};
+
+const RubiksCubeModel = forwardRef<RubiksCubeRef, any>((props, ref) => {
   const ANIMATION_DURATION = 1.2;
   const GAP = 0.01;
   const RADIUS = 0.075;
@@ -380,7 +385,7 @@ const RubiksCubeModel = forwardRef<THREE.Group, any>((props, ref) => {
 
     if (isAnimatingRef.current && currentMoveRef.current) {
       const move = currentMoveRef.current;
-      const targetRotation = move.rotationAngle;
+      const targetRotation = move.rotationAngle ?? Math.PI / 2; // Provide default value
       const rotation = delta / ANIMATION_DURATION;
 
       if (currentRotationRef.current < 1) {
@@ -436,7 +441,7 @@ const RubiksCubeModel = forwardRef<THREE.Group, any>((props, ref) => {
     reflectivity: 0.5,
     iridescence: 0,
     iridescenceIOR: 0,
-    iridescenceThicknessRange: [100, 400],
+    iridescenceThicknessRange: [100, 400] as [number, number],
     envMapIntensity: 8
   }), []);
 
@@ -507,8 +512,7 @@ function SceneContent() {
 
   const depthBuffer = useDepthBuffer({ 
     size: 2048,
-    frames: 1,
-    disableRenderLoop: true 
+    frames: 1
   });
   
   const [time, setTime] = useState(0);
