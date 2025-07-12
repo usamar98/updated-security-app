@@ -7,6 +7,14 @@ import React, { Suspense, useRef, useState, useEffect, forwardRef, useMemo, useC
 import { Vector3, Matrix4, Quaternion } from "three";
 import { RoundedBox } from "@react-three/drei";
 
+// Define the cube type
+type CubeType = {
+  position: Vector3;
+  rotationMatrix: Matrix4;
+  id: string;
+  originalCoords: { x: number; y: number; z: number };
+};
+
 const RubiksCubeModel = forwardRef((props, ref) => {
   const ANIMATION_DURATION = 1.2;
   const GAP = 0.01;
@@ -25,7 +33,7 @@ const RubiksCubeModel = forwardRef((props, ref) => {
   const resizeTimeoutRef = useRef(null);
   
   const [size, setSize] = useState(0.8);
-  const [cubes, setCubes] = useState([]);
+  const [cubes, setCubes] = useState<CubeType[]>([]);
   const [isVisible, setIsVisible] = useState(true);
   const [deviceSettings, setDeviceSettings] = useState(() => {
     const isMobile = window.innerWidth < 768;
