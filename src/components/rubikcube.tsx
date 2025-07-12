@@ -15,26 +15,34 @@ type CubeType = {
   originalCoords: { x: number; y: number; z: number };
 };
 
-const RubiksCubeModel = forwardRef((props, ref) => {
+// Define move type
+type MoveType = {
+  axis: 'x' | 'y' | 'z';
+  layer: number;
+  direction: number;
+  rotationAngle?: number;
+};
+
+const RubiksCubeModel = forwardRef<THREE.Group, any>((props, ref) => {
   const ANIMATION_DURATION = 1.2;
   const GAP = 0.01;
   const RADIUS = 0.075;
   
   const mainGroupRef = useRef<THREE.Group>(null);
-  const isAnimatingRef = useRef(false);
-  const currentRotationRef = useRef(0);
+  const isAnimatingRef = useRef<boolean>(false);
+  const currentRotationRef = useRef<number>(0);
   const lastMoveAxisRef = useRef<string | null>(null);
-  const currentMoveRef = useRef<any>(null);
+  const currentMoveRef = useRef<MoveType | null>(null);
   const animationFrameRef = useRef<number | null>(null);
-  const isMountedRef = useRef(true); 
-  const viewportSizeRef = useRef({ width: window.innerWidth, height: window.innerHeight });
+  const isMountedRef = useRef<boolean>(true); 
+  const viewportSizeRef = useRef<{ width: number; height: number }>({ width: window.innerWidth, height: window.innerHeight });
   
-  const isResizingRef = useRef(false);
+  const isResizingRef = useRef<boolean>(false);
   const resizeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   
-  const [size, setSize] = useState(0.8);
+  const [size, setSize] = useState<number>(0.8);
   const [cubes, setCubes] = useState<CubeType[]>([]);
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState<boolean>(true);
   const [deviceSettings, setDeviceSettings] = useState(() => {
     const isMobile = window.innerWidth < 768;
     return {
@@ -52,8 +60,8 @@ const RubiksCubeModel = forwardRef((props, ref) => {
     reset: resetCube
   }));
 
-  const initializeCubes = useCallback(() => {
-    const initial = [];
+  const initializeCubes = useCallback((): CubeType[] => {
+    const initial: CubeType[] = [];
     const positions = [-1, 0, 1];
     
     for (let x of positions) {
@@ -70,26 +78,6 @@ const RubiksCubeModel = forwardRef((props, ref) => {
     }
     return initial;
   }, []);
-
-  useEffect(() => {
-    setCubes(initializeCubes());
-    
-    isMountedRef.current = true;
-    
-    return () => {
-      isMountedRef.current = false;
-      
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-        animationFrameRef.current = null;
-      }
-      
-      if (resizeTimeoutRef.current) {
-        clearTimeout(resizeTimeoutRef.current);
-        resizeTimeoutRef.current = null;
-      }
-    };
-  }, [initializeCubes]);
 
   const resetCube = useCallback(() => {
     if (!isMountedRef.current) return;
@@ -224,9 +212,9 @@ const RubiksCubeModel = forwardRef((props, ref) => {
     };
   }, [resetCube, handleViewportChange]);
 
-  const possibleMoves = useMemo(() => {
-    const moves = [];
-    for (let axis of ['x', 'y', 'z']) {
+  const possibleMoves = useMemo((): MoveType[] => {
+    const moves: MoveType[] = [];
+    for (let axis of ['x', 'y', 'z'] as const) {
       for (let layer of [-1, 0, 1]) {
         for (const direction of [1, -1]) {
           moves.push({ axis, layer, direction });
@@ -236,7 +224,7 @@ const RubiksCubeModel = forwardRef((props, ref) => {
     return moves;
   }, []);
 
-  const isInLayer = useCallback((position, axis, layer) => {
+  const isInLayer = useCallback((position: Vector3, axis: 'x' | 'y' | 'z', layer: number): boolean => {
     const coord = axis === "x" ? position.x : axis === "y" ? position.y : position.z;
     return Math.abs(coord - layer) < 0.1;
   }, []);
@@ -259,7 +247,7 @@ const RubiksCubeModel = forwardRef((props, ref) => {
   }, [possibleMoves, isVisible]);
 
   useEffect(() => {
-    let timeoutId;
+    let timeoutId: NodeJS.Timeout;
 
     const scheduleNextMove = () => {
       if (isVisible && isMountedRef.current && !isResizingRef.current) {
@@ -275,7 +263,6 @@ const RubiksCubeModel = forwardRef((props, ref) => {
           delay
         );
       } else {
-        
         if (isResizingRef.current && isVisible && isMountedRef.current) {
           setTimeout(() => {
             if (isMountedRef.current) {
@@ -295,7 +282,7 @@ const RubiksCubeModel = forwardRef((props, ref) => {
     };
   }, [isVisible, selectNextMove]);
 
-  const createRotationMatrix = useCallback((axis, angle) => {
+  const createRotationMatrix = useCallback((axis: 'x' | 'y' | 'z', angle: number): Matrix4 => {
     reusableMatrix4.identity();
     reusableQuaternion.identity();
     reusableVec3.set(0, 0, 0);
@@ -305,16 +292,16 @@ const RubiksCubeModel = forwardRef((props, ref) => {
     return reusableMatrix4.makeRotationFromQuaternion(reusableQuaternion);
   }, [reusableMatrix4, reusableQuaternion, reusableVec3]);
 
-  const easeInOutQuad = useCallback((t) => {
+  const easeInOutQuad = useCallback((t: number): number => {
     return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
   }, []);
 
-  const matrixToQuaternion = useCallback((matrix) => {
+  const matrixToQuaternion = useCallback((matrix: Matrix4): Quaternion => {
     reusableQuaternion.setFromRotationMatrix(matrix);
     return reusableQuaternion.clone();
   }, [reusableQuaternion]);
 
-  const normalizePositions = useCallback((cubes) => {
+  const normalizePositions = useCallback((cubes: CubeType[]): CubeType[] => {
     return cubes.map(cube => {
       const x = Math.round(cube.position.x);
       const y = Math.round(cube.position.y);
@@ -334,7 +321,7 @@ const RubiksCubeModel = forwardRef((props, ref) => {
     });
   }, []);
 
-  const checkCubeIntegrity = useCallback((cubes) => {
+  const checkCubeIntegrity = useCallback((cubes: CubeType[]): boolean => {
     if (cubes.length !== 27) {
       console.warn("Incorrect number of cubes:", cubes.length);
       return false;
@@ -351,7 +338,7 @@ const RubiksCubeModel = forwardRef((props, ref) => {
     return true;
   }, []);
 
-  const updateCubes = useCallback((prevCubes, move, stepRotationMatrix) => {
+  const updateCubes = useCallback((prevCubes: CubeType[], move: MoveType, stepRotationMatrix: Matrix4): CubeType[] => {
     return prevCubes.map((cube) => {
       if (isInLayer(cube.position, move.axis, move.layer)) {
         const tempVec3 = new Vector3(
@@ -495,11 +482,8 @@ function CameraController() {
   return null;
 }
 
-function EnhancedSpotlight(props) {
-  const light = useRef();
-  
-  // Uncomment to see a visual helper for the spotlight
-  //useHelper(spotlightRef, THREE.SpotLightHelper, 'red');
+function EnhancedSpotlight(props: any) {
+  const light = useRef<THREE.SpotLight>(null);
   
   useEffect(() => {
     if (light.current) {
