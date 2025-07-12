@@ -20,17 +20,17 @@ const RubiksCubeModel = forwardRef((props, ref) => {
   const GAP = 0.01;
   const RADIUS = 0.075;
   
-  const mainGroupRef = useRef(null);
+  const mainGroupRef = useRef<THREE.Group>(null);
   const isAnimatingRef = useRef(false);
   const currentRotationRef = useRef(0);
-  const lastMoveAxisRef = useRef(null);
-  const currentMoveRef = useRef(null);
-  const animationFrameRef = useRef(null);
+  const lastMoveAxisRef = useRef<string | null>(null);
+  const currentMoveRef = useRef<any>(null);
+  const animationFrameRef = useRef<number | null>(null);
   const isMountedRef = useRef(true); 
   const viewportSizeRef = useRef({ width: window.innerWidth, height: window.innerHeight });
   
   const isResizingRef = useRef(false);
-  const resizeTimeoutRef = useRef(null);
+  const resizeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   
   const [size, setSize] = useState(0.8);
   const [cubes, setCubes] = useState<CubeType[]>([]);
