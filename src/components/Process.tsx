@@ -2,10 +2,15 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef, useState, useEffect } from 'react'
+import * as THREE from 'three'
 
 export default function Process() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
+  const mountRef = useRef<HTMLDivElement>(null)
+  const sceneRef = useRef<THREE.Scene | null>(null)
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null)
+  const frameRef = useRef<number | undefined>(undefined)
   const [scanningIndex, setScanningIndex] = useState(0)
   const [shieldPulse, setShieldPulse] = useState(0)
   const [watchRotation, setWatchRotation] = useState(0)
@@ -291,102 +296,27 @@ export default function Process() {
       
       case 'trace':
         return (
-          <div className="bg-gradient-to-br from-gray-900/50 to-gray-800/30 border border-gray-600/50 rounded-xl p-6 h-40 backdrop-blur-md relative overflow-hidden">
-            {/* Network background */}
-            <div className="absolute inset-0 opacity-20">
-              <svg className="w-full h-full" viewBox="0 0 200 100">
-                {/* Connection lines */}
-                {Array.from({ length: 6 }).map((_, i) => (
-                  <motion.line
-                    key={i}
-                    x1={20 + i * 30}
-                    y1={50}
-                    x2={50 + i * 30}
-                    y2={50}
-                    stroke="#fb923c"
-                    strokeWidth="1"
-                    opacity={traceProgress / 25 > i ? 0.6 : 0.2}
-                    animate={{
-                      strokeDasharray: traceProgress / 25 > i ? ["5,5", "10,0"] : "5,5",
-                      strokeDashoffset: [0, -10]
-                    }}
-                    transition={{ duration: 1, repeat: Infinity }}
-                  />
-                ))}
-              </svg>
-            </div>
-            
-            <div className="relative z-10">
-              <div className="flex items-center gap-2 mb-3">
+          <div className="bg-transparent border border-gray-700 rounded-lg p-4 h-32 relative overflow-hidden">
+            <div className="text-xs text-gray-500 mb-2">Transaction Flow</div>
+            <div className="flex items-center justify-between h-16">
+              {Array.from({ length: 5 }).map((_, i) => (
                 <motion.div
-                  className="w-2 h-2 bg-orange-400 rounded-full"
-                  animate={{ opacity: [1, 0.3, 1] }}
-                  transition={{ duration: 0.8, repeat: Infinity }}
-                />
-                <div className="text-xs text-gray-400">Transaction Tracer</div>
-              </div>
-              
-              <div className="space-y-3">
-                {['Origin Wallet', 'DEX Swap', 'Bridge Transfer', 'Mixer Protocol', 'Final Destination'].map((step, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <motion.div
-                      className={`w-3 h-3 rounded-full border-2 flex items-center justify-center ${
-                        (traceProgress / 25) > i 
-                          ? 'border-orange-400 bg-orange-400/20' 
-                          : 'border-gray-600 bg-gray-800'
-                      }`}
-                      animate={{
-                        scale: (traceProgress / 25) > i ? [1, 1.2, 1] : 1,
-                        boxShadow: (traceProgress / 25) > i 
-                          ? ["0 0 0 rgba(251, 146, 60, 0)", "0 0 10px rgba(251, 146, 60, 0.5)", "0 0 0 rgba(251, 146, 60, 0)"]
-                          : "0 0 0 rgba(251, 146, 60, 0)"
-                      }}
-                      transition={{ duration: 1, repeat: Infinity }}
-                    >
-                      {(traceProgress / 25) > i && (
-                        <motion.div
-                          className="w-1 h-1 bg-orange-400 rounded-full"
-                          animate={{ scale: [0, 1, 0] }}
-                          transition={{ duration: 1, repeat: Infinity }}
-                        />
-                      )}
-                    </motion.div>
-                    
-                    <span className={`text-xs transition-colors duration-300 ${
-                      (traceProgress / 25) > i ? 'text-orange-400' : 'text-gray-500'
-                    }`}>
-                      {step}
-                    </span>
-                    
-                    {/* Amount indicator */}
-                    {(traceProgress / 25) > i && i < 4 && (
-                      <motion.div
-                        className="ml-auto text-xs text-orange-400 font-mono"
-                        initial={{ opacity: 0, x: 10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5 }}
-                      >
-                        {(100 - i * 15).toFixed(1)} ETH
-                      </motion.div>
-                    )}
-                  </div>
-                ))}
-              </div>
-              
-              {/* Progress indicator */}
-              <div className="mt-3 flex items-center gap-2">
-                <div className="text-xs text-gray-500">Trace Progress:</div>
-                <div className="flex-1 h-1 bg-gray-700 rounded-full overflow-hidden">
-                  <motion.div
-                    className="h-full bg-gradient-to-r from-orange-400 to-orange-500"
-                    animate={{ width: `${(traceProgress / 25) * 20}%` }}
-                    transition={{ duration: 0.5 }}
-                  />
-                </div>
-                <div className="text-xs text-orange-400 font-mono">
-                  {Math.floor((traceProgress / 25) * 20)}%
-                </div>
-              </div>
+                  key={i}
+                  className={`w-8 h-8 rounded-full border-2 flex items-center justify-center text-xs ${
+                    traceProgress > i * 25 ? 'border-orange-400 bg-orange-400/20 text-orange-400' : 'border-gray-600 text-gray-600'
+                  }`}
+                  animate={{
+                    scale: traceProgress > i * 25 ? [1, 1.2, 1] : 1,
+                    borderColor: traceProgress > i * 25 ? ["rgb(251, 146, 60)", "rgb(251, 191, 36)", "rgb(251, 146, 60)"] : "rgb(75, 85, 99)"
+                  }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                >
+                  {i + 1}
+                </motion.div>
+              ))}
+            </div>
+            <div className="text-xs text-gray-400 mt-2">
+              Nodes traced: {traceNodes}/8
             </div>
           </div>
         )
@@ -396,7 +326,7 @@ export default function Process() {
           <div className="bg-transparent border border-gray-700 rounded-lg p-4 h-32">
             <div className="text-xs text-gray-500 mb-2">Control Panel</div>
             <div className="grid grid-cols-2 gap-2">
-              {['Deep Scan', 'Monitor', 'Bot Access', 'Reports'].map((feature, i) => (
+              {['Deep Scan', 'Monitor', 'Bot Access', 'Reports'].map((labFeature, i) => (
                 <motion.div
                   key={i}
                   className="text-xs p-2 rounded border border-gray-700 text-gray-400 text-center"
@@ -414,7 +344,7 @@ export default function Process() {
                     delay: i * 0.5
                   }}
                 >
-                  {feature}
+                  {labFeature}
                 </motion.div>
               ))}
             </div>
@@ -427,20 +357,18 @@ export default function Process() {
   }
 
   return (
-    <section ref={ref} className="py-20 relative overflow-hidden" style={{ backgroundColor: '#000000' }}>
-      {/* Background Image on Right Side */}
-      <div 
-        className="absolute top-0 right-12 w-1/2 h-full opacity-20 z-0"
-        style={{
-          backgroundImage: 'url(/animation-3.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
-      />
-      
-      {/* Gradient overlay to blend the image */}
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-transparent via-black/30 to-black z-5" />
+    <section ref={ref} className="py-20 relative overflow-hidden">
+      {/* Background with animation-4 image */}
+      <div className="absolute inset-0 z-0">
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: 'url(/animation-4.png)'
+          }}
+        />
+        {/* Dark overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/40" />
+      </div>
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
@@ -450,7 +378,7 @@ export default function Process() {
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.8 }}
         >
-          <motion.h2 
+          <motion.h2
             className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-400 bg-clip-text text-transparent"
             animate={{
               backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
@@ -475,7 +403,7 @@ export default function Process() {
             </motion.span>
             HOW IT WORKS
           </motion.h2>
-          <motion.p 
+          <motion.p
             className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}

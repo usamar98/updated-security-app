@@ -1,6 +1,7 @@
 'use client'
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
+import { Scene } from './rubikcube'
 
 export default function Roadmap() {
   const ref = useRef(null)
@@ -68,21 +69,18 @@ export default function Roadmap() {
   ]
 
   return (
-    <section className="py-20 relative overflow-hidden" style={{ backgroundColor: '#000000' }} ref={ref}>
-      {/* Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-15"
-        style={{
-          backgroundImage: 'url(/animation-1.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center'
-        }}
-      />
+    <section className="py-20 relative overflow-hidden" ref={ref}>
+      {/* Rubik's Cube Animation Background */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-black" />
+        <div className="absolute inset-0 opacity-30">
+          <Scene />
+        </div>
+        {/* Dark overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/60" />
+      </div>
       
-      {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/50" />
-      
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
           className="text-center mb-16"
@@ -130,7 +128,7 @@ export default function Roadmap() {
                 >
                   {/* Card */}
                   <div className={`w-full max-w-md ${isRight ? 'mr-8' : 'ml-8'}`}>
-                    <div className={`bg-black/40 border ${quarter.borderColor} rounded-2xl p-6 backdrop-blur-sm relative`}>
+                    <div className={`bg-black/60 border ${quarter.borderColor} rounded-2xl p-6 backdrop-blur-sm relative`}>
                       {/* Card Header */}
                       <div className="mb-4">
                         <div className="text-3xl mb-2">

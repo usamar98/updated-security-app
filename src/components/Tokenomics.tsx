@@ -242,29 +242,52 @@ export default function Tokenomics() {
               </motion.div>
             </div>
 
-            {/* Navigation Dots */}
+            {/* Navigation Dots with Previous/Next Buttons */}
             <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2">
-              <div className="flex items-center gap-3">
-                {tokenomicsData.map((_, i) => (
-                  <motion.button
-                    key={i}
-                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                      i === currentIndex 
-                        ? 'bg-gray-400 shadow-lg shadow-gray-400/50' 
-                        : 'bg-gray-600 hover:bg-gray-500'
-                    }`}
-                    onClick={() => setCurrentIndex(i)}
-                    whileHover={{ scale: 1.2 }}
-                    whileTap={{ scale: 0.9 }}
-                    animate={{
-                      scale: i === currentIndex ? [1, 1.2, 1] : 1
-                    }}
-                    transition={{
-                      duration: i === currentIndex ? 2 : 0.2,
-                      repeat: i === currentIndex ? Infinity : 0
-                    }}
-                  />
-                ))}
+              <div className="flex items-center gap-6">
+                {/* Previous Button */}
+                <motion.button
+                  className="w-10 h-10 rounded-full bg-gray-600/50 border border-gray-500/30 flex items-center justify-center text-gray-400 hover:bg-gray-500/50 hover:text-gray-300 transition-all duration-300"
+                  onClick={() => setCurrentIndex(prev => prev === 0 ? tokenomicsData.length - 1 : prev - 1)}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  ←
+                </motion.button>
+                
+                {/* Dots */}
+                <div className="flex items-center gap-3">
+                  {tokenomicsData.map((_, i) => (
+                    <motion.button
+                      key={i}
+                      className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                        i === currentIndex 
+                          ? 'bg-gray-400 shadow-lg shadow-gray-400/50' 
+                          : 'bg-gray-600 hover:bg-gray-500'
+                      }`}
+                      onClick={() => setCurrentIndex(i)}
+                      whileHover={{ scale: 1.2 }}
+                      whileTap={{ scale: 0.9 }}
+                      animate={{
+                        scale: i === currentIndex ? [1, 1.2, 1] : 1
+                      }}
+                      transition={{
+                        duration: i === currentIndex ? 2 : 0.2,
+                        repeat: i === currentIndex ? Infinity : 0
+                      }}
+                    />
+                  ))}
+                </div>
+                
+                {/* Next Button */}
+                <motion.button
+                  className="w-10 h-10 rounded-full bg-gray-600/50 border border-gray-500/30 flex items-center justify-center text-gray-400 hover:bg-gray-500/50 hover:text-gray-300 transition-all duration-300"
+                  onClick={() => setCurrentIndex(prev => (prev + 1) % tokenomicsData.length)}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  →
+                </motion.button>
               </div>
             </div>
 

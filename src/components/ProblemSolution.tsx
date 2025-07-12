@@ -37,43 +37,36 @@ export default function ProblemSolution() {
   useEffect(() => {
     const interval = setInterval(() => {
       setSolutionScrollIndex(prev => (prev + 1) % solutionPoints.length)
-    }, 3500) // Slightly different timing to avoid sync
+    }, 3500)
     return () => clearInterval(interval)
   }, [])
 
   return (
-    <section className="py-20 relative overflow-hidden" ref={ref}>
-      {/* Dark Gradient Background - Same as Hero */}
-      <div 
-        className="absolute inset-0 z-0"
-        style={{ background: '#000000 ' }}
-      />
+    <section className="py-20 relative overflow-hidden" ref={ref} style={{ backgroundColor: '#000000' }}>
+      {/* Remove the problematic overlay */}
       
-      {/* Subtle overlay for content readability */}
-      <div className="absolute inset-0 bg-black/30 z-5" />
-
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Large Container Card */}
         <motion.div 
-          className="bg-transparent border border-gray-700 rounded-3xl p-8 md:p-12 backdrop-blur-sm"
+          className="bg-gray-900/20 border border-gray-700/50 rounded-3xl p-8 md:p-12 backdrop-blur-sm"
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
           transition={{ duration: 0.8 }}
           whileHover={{ 
             borderColor: "rgb(75, 85, 99)",
-            backgroundColor: "rgba(75, 85, 99, 0.02)"
+            backgroundColor: "rgba(75, 85, 99, 0.1)"
           }}
         >
           <div className="grid md:grid-cols-2 gap-8 md:gap-12">
             {/* Problem Card */}
             <motion.div 
-              className="bg-transparent border border-gray-700 rounded-2xl p-6 md:p-8 backdrop-blur-sm h-96 overflow-hidden relative"
+              className="bg-gray-900/30 border border-gray-700/50 rounded-2xl p-6 md:p-8 backdrop-blur-sm h-96 overflow-hidden relative"
               initial={{ opacity: 0, x: -30 }}
               animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               whileHover={{ 
                 borderColor: "rgb(239, 68, 68)",
-                backgroundColor: "rgba(239, 68, 68, 0.02)"
+                backgroundColor: "rgba(239, 68, 68, 0.05)"
               }}
             >
               {/* Problem Header */}
@@ -117,8 +110,8 @@ export default function ProblemSolution() {
                   {problemPoints.map((point, index) => (
                     <motion.p 
                       key={index}
-                      className={`text-gray-400 leading-relaxed transition-opacity duration-500 ${
-                        index === problemScrollIndex ? 'opacity-100' : 'opacity-40'
+                      className={`text-gray-300 leading-relaxed transition-opacity duration-500 ${
+                        index === problemScrollIndex ? 'opacity-100' : 'opacity-60'
                       }`}
                       style={{ minHeight: '60px' }}
                     >
@@ -128,7 +121,7 @@ export default function ProblemSolution() {
                 </motion.div>
                 
                 {/* Gradient Fade */}
-                <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-gray-900/80 to-transparent pointer-events-none"></div>
+                <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-gray-900 to-transparent pointer-events-none"></div>
               </div>
 
               {/* Progress Indicator */}
@@ -138,7 +131,7 @@ export default function ProblemSolution() {
                     <motion.div
                       key={index}
                       className={`h-1 rounded-full transition-all duration-300 ${
-                        index === problemScrollIndex ? 'bg-red-400 flex-1' : 'bg-gray-700 w-2'
+                        index === problemScrollIndex ? 'bg-red-400 flex-1' : 'bg-gray-600 w-2'
                       }`}
                     />
                   ))}
@@ -148,13 +141,13 @@ export default function ProblemSolution() {
 
             {/* Solution Card */}
             <motion.div 
-              className="bg-transparent border border-gray-700 rounded-2xl p-6 md:p-8 backdrop-blur-sm h-96 overflow-hidden relative"
+              className="bg-gray-900/30 border border-gray-700/50 rounded-2xl p-6 md:p-8 backdrop-blur-sm h-96 overflow-hidden relative"
               initial={{ opacity: 0, x: 30 }}
               animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
               transition={{ duration: 0.6, delay: 0.4 }}
               whileHover={{ 
                 borderColor: "rgb(34, 197, 94)",
-                backgroundColor: "rgba(34, 197, 94, 0.02)"
+                backgroundColor: "rgba(34, 197, 94, 0.05)"
               }}
             >
               {/* Solution Header */}
@@ -199,8 +192,8 @@ export default function ProblemSolution() {
                   {solutionPoints.map((point, index) => (
                     <motion.p 
                       key={index}
-                      className={`text-gray-400 leading-relaxed transition-opacity duration-500 ${
-                        index === solutionScrollIndex ? 'opacity-100' : 'opacity-40'
+                      className={`text-gray-300 leading-relaxed transition-opacity duration-500 ${
+                        index === solutionScrollIndex ? 'opacity-100' : 'opacity-60'
                       }`}
                       style={{ minHeight: '60px' }}
                     >
@@ -210,7 +203,7 @@ export default function ProblemSolution() {
                 </motion.div>
                 
                 {/* Gradient Fade */}
-                <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-gray-900/80 to-transparent pointer-events-none"></div>
+                <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-gray-900 to-transparent pointer-events-none"></div>
               </div>
 
               {/* Progress Indicator */}
@@ -220,7 +213,7 @@ export default function ProblemSolution() {
                     <motion.div
                       key={index}
                       className={`h-1 rounded-full transition-all duration-300 ${
-                        index === solutionScrollIndex ? 'bg-green-400 flex-1' : 'bg-gray-700 w-2'
+                        index === solutionScrollIndex ? 'bg-green-400 flex-1' : 'bg-gray-600 w-2'
                       }`}
                     />
                   ))}

@@ -36,11 +36,11 @@ export default function Header() {
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.2 }}
           >
-            <div className="text-2xl font-bold text-white tracking-tight">
-              <span className="bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent">
-                AION AI
-              </span>
-            </div>
+            <img 
+              src="/logo.png" 
+              alt="AION AI" 
+              className="h-10 w-auto"
+            />
           </motion.div>
           
           {/* Desktop Navigation with Single Border */}
