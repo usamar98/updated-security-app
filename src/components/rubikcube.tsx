@@ -162,7 +162,7 @@ const RubiksCubeModel = forwardRef((props, ref) => {
   useEffect(() => {
     handleViewportChange();
     
-    let throttleTimer = null;
+    let throttleTimer: NodeJS.Timeout | null = null;
     const throttledHandler = () => {
       if (throttleTimer) return;
       throttleTimer = setTimeout(() => {
