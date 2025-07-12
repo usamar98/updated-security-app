@@ -42,8 +42,17 @@ export default function ProblemSolution() {
   }, [])
 
   return (
-    <section className="py-20 relative overflow-hidden" style={{ backgroundColor: '#000000' }} ref={ref}>
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-20 relative overflow-hidden" ref={ref}>
+      {/* Dark Gradient Background - Same as Hero */}
+      <div 
+        className="absolute inset-0 z-0"
+        style={{ background: '#000000 ' }}
+      />
+      
+      {/* Subtle overlay for content readability */}
+      <div className="absolute inset-0 bg-black/30 z-5" />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Large Container Card */}
         <motion.div 
           className="bg-transparent border border-gray-700 rounded-3xl p-8 md:p-12 backdrop-blur-sm"

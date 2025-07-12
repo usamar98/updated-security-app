@@ -69,6 +69,19 @@ export default function Roadmap() {
 
   return (
     <section className="py-20 relative overflow-hidden" style={{ backgroundColor: '#000000' }} ref={ref}>
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-15"
+        style={{
+          backgroundImage: 'url(/animation-1.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
+      />
+      
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black/50" />
+      
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -91,11 +104,11 @@ export default function Roadmap() {
 
         {/* Timeline Container */}
         <div className="relative max-w-6xl mx-auto">
-          {/* Center Line */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gray-700 h-full">
+          {/* Center Line - Made More Prominent */}
+          <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-gray-400 via-gray-500 to-gray-400 h-full shadow-lg">
             {/* Animated Progress Line */}
             <motion.div
-              className="w-full bg-gray-800"
+              className="w-full bg-gradient-to-b from-gray-300 via-gray-400 to-gray-300 shadow-lg"
               initial={{ height: "0%" }}
               animate={isInView ? { height: "100%" } : { height: "0%" }}
               transition={{ duration: 2, delay: 0.5, ease: "easeInOut" }}
@@ -131,19 +144,17 @@ export default function Roadmap() {
                         </p>
                       </div>
 
-                      {/* Static Content */}
+                      {/* Content with points but without boxes */}
                       <div className="space-y-3">
                         {quarter.items.map((item, itemIndex) => (
                           <div
                             key={itemIndex}
-                            className="bg-black/20 border border-gray-600/20 rounded-lg p-3 backdrop-blur-sm"
+                            className="flex items-start gap-3"
                           >
-                            <div className="flex items-start gap-2">
-                              <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${quarter.color} mt-2 flex-shrink-0`} />
-                              <p className="text-gray-400 text-sm leading-relaxed">
-                                {item}
-                              </p>
-                            </div>
+                            <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${quarter.color} mt-2 flex-shrink-0`} />
+                            <p className="text-gray-400 text-sm leading-relaxed">
+                              {item}
+                            </p>
                           </div>
                         ))}
                       </div>
@@ -155,9 +166,9 @@ export default function Roadmap() {
                     </div>
                   </div>
 
-                  {/* Timeline Dot */}
+                  {/* Timeline Dot - Made More Prominent */}
                   <motion.div
-                    className={`absolute left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-gradient-to-r ${quarter.color} border-4 border-black z-10`}
+                    className={`absolute left-1/2 transform -translate-x-1/2 w-6 h-6 rounded-full bg-gradient-to-r ${quarter.color} border-4 border-black shadow-lg z-10`}
                     initial={{ scale: 0 }}
                     animate={isInView ? { scale: 1 } : { scale: 0 }}
                     transition={{ duration: 0.3, delay: index * 0.2 + 0.3 }}

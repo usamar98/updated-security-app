@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="text-gray-400 py-12" style={{ backgroundColor: '#0f0f0f' }}>
+    <footer className="text-gray-400 py-12" style={{ backgroundColor: '#000000' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-4 gap-8">
           <div>

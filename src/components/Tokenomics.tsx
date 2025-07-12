@@ -84,7 +84,25 @@ export default function Tokenomics() {
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
         style={{
-          backgroundImage: 'url(/screenshot.png)',
+          // backgroundImage: 'url(/screenshot.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
+      />
+      
+      {/* Background Images */}
+      <div 
+        className="absolute top-0 right-0 w-1/2 h-1/2 bg-cover bg-center bg-no-repeat opacity-20 z-0"
+        style={{
+          backgroundImage: 'url(/animation-2.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
+        }}
+      />
+      <div 
+        className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-cover bg-center bg-no-repeat opacity-20 z-0"
+        style={{
+          backgroundImage: 'url(/animation-2.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}

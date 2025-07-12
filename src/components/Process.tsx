@@ -427,111 +427,168 @@ export default function Process() {
   }
 
   return (
-    <section id="process" className="py-20 relative overflow-hidden" style={{ backgroundColor: '#000000' }} ref={ref}>
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div 
+    <section ref={ref} className="py-20 relative overflow-hidden" style={{ backgroundColor: '#000000' }}>
+      {/* Background Image on Right Side */}
+      <div 
+        className="absolute top-0 right-12 w-1/2 h-full opacity-20 z-0"
+        style={{
+          backgroundImage: 'url(/animation-3.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      />
+      
+      {/* Gradient overlay to blend the image */}
+      <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-transparent via-black/30 to-black z-5" />
+      
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8 }}
         >
           <motion.h2 
-            className="text-3xl md:text-5xl font-bold text-gray-300 mb-4 flex items-center justify-center gap-3"
+            className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-400 bg-clip-text text-transparent"
             animate={{
-              textShadow: [
-                "0 0 20px rgba(59, 130, 246, 0.3)",
-                "0 0 30px rgba(59, 130, 246, 0.5)",
-                "0 0 20px rgba(59, 130, 246, 0.3)"
-              ]
+              backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
             }}
             transition={{
-              duration: 2,
+              duration: 5,
               repeat: Infinity
             }}
           >
             <motion.span
-              animate={{ 
+              className="inline-block mr-4 text-4xl"
+              animate={{
                 rotate: [0, 10, -10, 0],
                 scale: [1, 1.1, 1]
               }}
               transition={{
-                duration: 3,
+                duration: 4,
                 repeat: Infinity
               }}
             >
-              🛡️
+              ⚙️
             </motion.span>
-            PLATFORM FEATURES
+            HOW IT WORKS
           </motion.h2>
-          <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto mb-2">
-            Comprehensive Web3 Security Suite
-          </p>
-          <p className="text-gray-500">
-            Advanced AI-powered tools to protect, analyze, and monitor your Web3 interactions
-          </p>
+          <motion.p 
+            className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            Five AI-powered tools working together to keep you safe in Web3.
+          </motion.p>
         </motion.div>
-        
-        <div className="space-y-16">
-          {features.map((feature, index) => (
-            <motion.div 
-              key={index} 
-              className={`flex flex-col lg:flex-row items-center gap-8 ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
-            >
-              {/* Feature Info */}
-              <div className="flex-1 text-center lg:text-left">
-                <motion.div 
-                  className="bg-transparent border border-gray-600 text-gray-400 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto lg:mx-0 mb-6 text-2xl backdrop-blur-sm"
-                  whileHover={{ 
-                    scale: 1.1, 
-                    rotate: 5,
-                    borderColor: "rgb(75, 85, 99)",
-                    backgroundColor: "rgba(75, 85, 99, 0.1)"
+
+        {/* Features Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {features.map((feature, index) => {
+            // Special layout for the first feature (Aion Bot)
+            if (index === 0) {
+              return (
+                <motion.div
+                  key={index}
+                  className="bg-transparent border border-gray-600/30 rounded-2xl p-8 backdrop-blur-sm hover:border-gray-500/50 transition-all duration-300 lg:col-span-2"
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+                  transition={{ duration: 0.8, delay: index * 0.1 }}
+                  whileHover={{
+                    y: -5,
+                    boxShadow: "0 20px 40px rgba(59, 130, 246, 0.1)"
                   }}
                 >
-                  <motion.span
-                    animate={{ 
-                      rotate: feature.animationType === 'watch' ? [0, 360] : [0, 10, -10, 0],
+                  {/* Content Above */}
+                  <div className="mb-8">
+                    <div className="flex items-center gap-4 mb-6">
+                      <motion.div
+                        className="text-4xl"
+                        animate={{
+                          rotate: [0, 10, -10, 0],
+                          scale: [1, 1.1, 1]
+                        }}
+                        transition={{
+                          duration: 3,
+                          repeat: Infinity
+                        }}
+                      >
+                        {feature.icon}
+                      </motion.div>
+                      <div>
+                        <h3 className="text-2xl font-bold text-gray-300 mb-2">
+                          {feature.title}
+                        </h3>
+                        <p className="text-gray-400 text-lg">
+                          {feature.description}
+                        </p>
+                      </div>
+                    </div>
+                    <p className="text-gray-500 text-base leading-relaxed">
+                      {feature.details}
+                    </p>
+                  </div>
+                  
+                  {/* Animation Below */}
+                  <div className="mt-6">
+                    {renderFeatureAnimation(feature, index)}
+                  </div>
+                </motion.div>
+              )
+            }
+            
+            // Regular layout for other features
+            return (
+              <motion.div
+                key={index}
+                className="bg-transparent border border-gray-600/30 rounded-2xl p-8 backdrop-blur-sm hover:border-gray-500/50 transition-all duration-300"
+                initial={{ opacity: 0, y: 50 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+                transition={{ duration: 0.8, delay: index * 0.1 }}
+                whileHover={{
+                  y: -5,
+                  boxShadow: "0 20px 40px rgba(59, 130, 246, 0.1)"
+                }}
+              >
+                <div className="flex items-center gap-4 mb-6">
+                  <motion.div
+                    className="text-3xl"
+                    animate={{
+                      rotate: [0, 10, -10, 0],
                       scale: [1, 1.1, 1]
                     }}
-                    transition={{ 
-                      duration: feature.animationType === 'watch' ? 4 : 2, 
-                      repeat: Infinity, 
-                      delay: index * 0.3 
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      delay: index * 0.5
                     }}
                   >
                     {feature.icon}
-                  </motion.span>
-                </motion.div>
+                  </motion.div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-300 mb-2">
+                      {feature.title}
+                    </h3>
+                  </div>
+                </div>
                 
-                <h3 className="text-2xl font-bold text-gray-300 mb-4">
-                  {feature.title}
-                </h3>
-                
-                <p className="text-gray-400 leading-relaxed mb-4">
+                <p className="text-gray-400 mb-4 leading-relaxed">
                   {feature.description}
                 </p>
                 
-                <p className="text-gray-500 leading-relaxed">
+                <p className="text-gray-500 text-sm mb-6 leading-relaxed">
                   {feature.details}
                 </p>
-              </div>
-
-              {/* Feature Animation */}
-              <div className="flex-1">
-                <motion.div
-                  whileHover={{ 
-                    y: -5,
-                    boxShadow: "0 20px 40px rgba(0, 0, 0, 0.3)"
-                  }}
-                >
+                
+                <div className="mt-6">
                   {renderFeatureAnimation(feature, index)}
-                </motion.div>
-              </div>
-            </motion.div>
-          ))}
+                </div>
+              </motion.div>
+            )
+          })}
         </div>
       </div>
     </section>
