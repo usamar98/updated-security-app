@@ -9,61 +9,52 @@ export default function Roadmap() {
 
   const roadmapData = [
     {
-      quarter: "Q1 2025",
-      title: "Foundation & Launch",
+      quarter: "Phase 1",
+      title: "Launch & Core Infrastructure",
       icon: "🚀",
       color: "from-gray-400 to-gray-600",
       borderColor: "border-gray-400/30",
+      description: "Establishing Aion as the go-to security layer for Telegram, dApps, and developers.",
       items: [
-        "Launch of $AION Token with live in-platform utility",
-        "Whitepaper v1",
-        "Launch of Aion Bot on Telegram",
-        "Release of Aion Shield and Aion Watch for real-time scanning",
-        "Whitepaper v2 and official Aion AI website v2",
-        "Closed beta of the Aion Lab dApp dashboard",
-        "Internal build of AionNet API Suite for developer integration"
+        "Launch of $AION Token (utility-based, no staking)",
+        "Aion Bot (Telegram-native link, wallet scanner)",
+        "Phishing Link Detection (CharBERT AI)",
+        "Wallet Risk Dashboard (STFN-based engine)",
+        "Developer API (wallets + URLs)",
+        "GitBook documentation and open developer portal",
+        "Internal alpha of Aion Trace (fund tracking engine)"
       ]
     },
     {
-      quarter: "Q2 2025",
-      title: "Expansion & Ecosystem Growth",
-      icon: "🌱",
+      quarter: "Phase 2",
+      title: "Expansion, Customization & Intelligence",
+      icon: "🧠",
       color: "from-gray-400 to-gray-600",
       borderColor: "border-gray-400/30",
+      description: "Extending detection capabilities, opening up customization, and layering AI intelligence.",
       items: [
-        "Public beta of Aion Trace for fund tracking and forensics",
-        "Rollout of wallet alert system via Telegram + Aion Lab",
-        "Full beta release of Aion Lab dashboard with risk history, scans, and reports",
-        "Developer onboarding and API access for external projects and bots",
-        "Launch of early threat intel submission module"
+        "Full release of Aion Trace (visual graph tracing of hacked funds)",
+        "CharBERT v2 with multilingual phishing detection",
+        "Smart Contract Scanner (honeypot, drainers, proxy detection)",
+        "Project onboarding: token-gated bot access via $AION",
+        "Web dashboard for user scan history + group security logs",
+        "Partner integrations with launchpads, bots, and community tools",
+        "SDKs for React, Node.js, and Python"
       ]
     },
     {
-      quarter: "Q3 2026",
-      title: "Multichain & Automation",
-      icon: "🔗",
+      quarter: "Phase 3",
+      title: "Ecosystem & Decentralized Security Network",
+      icon: "🌐",
       color: "from-gray-400 to-gray-600",
       borderColor: "border-gray-400/30",
+      description: "Aion evolves from a product to an ecosystem — with user-governed threat intelligence.",
       items: [
-        "Browser extension for real-time link/contract scanning across Web3",
-        "Multichain expansion (ETH, BSC, Arbitrum, Polygon)",
-        "Scam intelligence database with verified user-submitted threats",
-        "Introduction of DAO voting layer for Aion platform governance",
-        "Discord and Twitter integration for bots and security alerts"
-      ]
-    },
-    {
-      quarter: "Q4 2026",
-      title: "Infrastructure & Network",
-      icon: "🏗️",
-      color: "from-gray-400 to-gray-600",
-      borderColor: "border-gray-400/30",
-      items: [
-        "Rollout of project trust scoring and AI-based contract badges",
-        "Enhanced tracing & forensic toolkit for public and private investigations",
-        "Transparency dashboard with scam index, flag rate, and active threats",
-        "Strategic partnerships with Web3 wallets, communities, and DeFi protocols",
-        "Continuous R&D updates from Aion Lab's AI engine"
+        "Aion Trace Pro for DAOs, security firms, and forensic teams",
+        "Open up Aion Lab internal research for contributors",
+        "Bug bounty and white-hat incentive program",
+        "Strategic alliances with leading Web3 platforms & RPC providers",
+        "Embed detection in wallets, block explorers, and dApps"
       ]
     }
   ]
@@ -115,7 +106,7 @@ export default function Roadmap() {
 
           {/* Timeline Items */}
           <div className="space-y-16">
-            {roadmapData.map((quarter, index) => {
+            {roadmapData.map((phase, index) => {
               const isRight = index % 2 === 0
               
               return (
@@ -128,28 +119,33 @@ export default function Roadmap() {
                 >
                   {/* Card */}
                   <div className={`w-full max-w-md ${isRight ? 'mr-8' : 'ml-8'}`}>
-                    <div className={`bg-black/60 border ${quarter.borderColor} rounded-2xl p-6 backdrop-blur-sm relative`}>
+                    <div className={`bg-black/60 border ${phase.borderColor} rounded-2xl p-6 backdrop-blur-sm relative`}>
                       {/* Card Header */}
                       <div className="mb-4">
                         <div className="text-3xl mb-2">
-                          {quarter.icon}
+                          {phase.icon}
                         </div>
-                        <h3 className={`text-xl font-bold bg-gradient-to-r ${quarter.color} bg-clip-text text-transparent mb-1`}>
-                          {quarter.quarter}
+                        <h3 className={`text-xl font-bold bg-gradient-to-r ${phase.color} bg-clip-text text-transparent mb-1`}>
+                          {phase.quarter}
                         </h3>
-                        <p className="text-gray-300 text-sm font-medium">
-                          {quarter.title}
+                        <p className="text-gray-300 text-sm font-medium mb-2">
+                          {phase.title}
                         </p>
+                        {phase.description && (
+                          <p className="text-gray-400 text-xs leading-relaxed mb-3">
+                            {phase.description}
+                          </p>
+                        )}
                       </div>
 
                       {/* Content with points but without boxes */}
                       <div className="space-y-3">
-                        {quarter.items.map((item, itemIndex) => (
+                        {phase.items.map((item, itemIndex) => (
                           <div
                             key={itemIndex}
                             className="flex items-start gap-3"
                           >
-                            <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${quarter.color} mt-2 flex-shrink-0`} />
+                            <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${phase.color} mt-2 flex-shrink-0`} />
                             <p className="text-gray-400 text-sm leading-relaxed">
                               {item}
                             </p>
@@ -159,14 +155,14 @@ export default function Roadmap() {
 
                       {/* Milestone Count */}
                       <div className="mt-4 text-xs text-gray-500">
-                        {quarter.items.length} milestones
+                        {phase.items.length} milestones
                       </div>
                     </div>
                   </div>
 
                   {/* Timeline Dot - Made More Prominent */}
                   <motion.div
-                    className={`absolute left-1/2 transform -translate-x-1/2 w-6 h-6 rounded-full bg-gradient-to-r ${quarter.color} border-4 border-black shadow-lg z-10`}
+                    className={`absolute left-1/2 transform -translate-x-1/2 w-6 h-6 rounded-full bg-gradient-to-r ${phase.color} border-4 border-black shadow-lg z-10`}
                     initial={{ scale: 0 }}
                     animate={isInView ? { scale: 1 } : { scale: 0 }}
                     transition={{ duration: 0.3, delay: index * 0.2 + 0.3 }}

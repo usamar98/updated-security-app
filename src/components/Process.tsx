@@ -67,22 +67,22 @@ export default function Process() {
     },
     {
       icon: "🛡️",
-      title: "Aion Shield",
-      description: "An AI-based scanner that detects phishing pages, honeypots, proxy logic, and drainers.",
+      title: "Phishing Link Scanner",
+      description: "Scans URLs in real-time using CharBERT model, A character-level AI model trained to catch phishing, drainer sites and impersonations even when obfuscated by typos or Unicode tricks.",
       details: "Whether it's a sniper bot, presale, or dApp URL — Shield has your back.",
       animationType: "shield"
     },
     {
       icon: "👁️",
-      title: "Aion Watch",
-      description: "Analyze any wallet address for unrevoked approvals, exposure to scam contracts, and overall wallet trust score.",
+      title: "Phishing wallets detection",
+      description: "Know your wallet's risk in seconds with no connection needed. Aion AI reveals scam token exposure, risky approvals, and past interactions with malicious contracts to help you avoid wallet-draining traps.",
       details: "Stay safe without ever connecting your wallet.",
       animationType: "watch"
     },
     {
       icon: "🧭",
-      title: "Aion Trace",
-      description: "After an exploit, trace where your funds went — across bridges, swaps, mixers, and wallets.",
+      title: "Trace Stolen funds",
+      description: "Trace stolen funds and map post-hack movements. Using AI-powered transaction graph analysis, Aion Trace follows stolen assets across bridges, DEXs and wallets exposing laundering patterns in real time.",
       details: "A full post-hack visualization engine for audits, reports, and recovery.",
       animationType: "trace"
     },

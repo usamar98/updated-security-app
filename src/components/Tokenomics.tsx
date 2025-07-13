@@ -5,53 +5,43 @@ import { useRef, useState, useEffect } from 'react'
 const tokenomicsData = [
   {
     type: 'title',
-    content: 'AION',
+    content: 'AION AI Token',
     description: 'Advanced Intelligence Operations Network'
   },
   {
-    type: 'description',
-    content: 'Token Distribution',
-    description: 'Strategic allocation for sustainable growth and community governance'
+    type: 'metric',
+    icon: '🏷️',
+    content: 'Token Name',
+    value: 'Aion AI Token',
+    description: 'Official token name'
+  },
+  {
+    type: 'metric',
+    icon: '💎',
+    content: 'Symbol',
+    value: '$AION',
+    description: 'Trading symbol'
   },
   {
     type: 'metric',
     icon: '💰',
     content: 'Total Supply',
-    value: '1B AION',
-    description: 'Fixed supply with deflationary mechanics'
+    value: '10,000,000',
+    description: 'Fixed maximum supply'
   },
   {
     type: 'metric',
-    icon: '🏛️',
-    content: 'Public Sale',
-    value: '40%',
-    description: 'Community distribution and liquidity'
+    icon: '⛓️',
+    content: 'Blockchain',
+    value: 'Ethereum (ERC-20)',
+    description: 'Built on Ethereum network'
   },
   {
     type: 'metric',
-    icon: '👥',
-    content: 'Team & Advisors',
-    value: '20%',
-    description: 'Vested over 4 years with 1-year cliff'
-  },
-  {
-    type: 'metric',
-    icon: '🎯',
-    content: 'Development',
-    value: '25%',
-    description: 'Platform development and ecosystem growth'
-  },
-  {
-    type: 'metric',
-    icon: '🔄',
-    content: 'Liquidity & Staking',
-    value: '15%',
-    description: 'DEX liquidity and staking rewards'
-  },
-  {
-    type: 'feature',
-    content: 'Utility Features',
-    description: 'Governance voting, staking rewards, premium features access, and transaction fee discounts'
+    icon: '🔢',
+    content: 'Decimals',
+    value: '18',
+    description: 'Standard ERC-20 precision'
   }
 ]
 
@@ -129,7 +119,7 @@ export default function Tokenomics() {
               Tokenomics
             </h2>
             <p className="text-xl text-gray-500 max-w-3xl mx-auto leading-relaxed">
-              Discover the economic model powering the AION ecosystem, designed for sustainable growth and community governance.
+              Discover the token specifications for the AION AI ecosystem.
             </p>
           </motion.div>
 
@@ -175,28 +165,6 @@ export default function Tokenomics() {
                       {currentItem.content}
                     </motion.h3>
                     <p className="text-xl text-gray-500 font-medium">
-                      {currentItem.description}
-                    </p>
-                  </div>
-                )}
-
-                {currentItem.type === 'description' && (
-                  <div>
-                    <h3 className="text-3xl md:text-4xl font-bold text-gray-400 mb-6">
-                      {currentItem.content}
-                    </h3>
-                    <p className="text-xl text-gray-500 leading-relaxed">
-                      {currentItem.description}
-                    </p>
-                  </div>
-                )}
-
-                {currentItem.type === 'feature' && (
-                  <div>
-                    <h3 className="text-3xl md:text-4xl font-bold text-gray-400 mb-6">
-                      {currentItem.content}
-                    </h3>
-                    <p className="text-xl text-gray-500 leading-relaxed">
                       {currentItem.description}
                     </p>
                   </div>

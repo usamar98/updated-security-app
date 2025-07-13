@@ -385,7 +385,7 @@ export default function Hero() {
               whileTap={{ scale: 0.95 }}
             >
               <span className="flex items-center justify-center gap-1.5 sm:gap-2">
-                💰 Buy Aion AI
+                Buy $Aion
               </span>
             </motion.button>
             
